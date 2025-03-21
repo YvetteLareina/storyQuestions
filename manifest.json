@@ -1,0 +1,11 @@
+{
+  "id": "story-questions",
+  "name": "Story Questions",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Ein Plugin für Charaktergenerierung.",
+  "author": "Dein Name",
+  "authorUrl": "https://deine-website.de",  
+  "isDesktopOnly": false
+
+}
