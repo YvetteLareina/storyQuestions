@@ -1,0 +1,17 @@
+# Node-Module-Ordner (riesig, wird automatisch generiert)
+node_modules/
+
+# TypeScript Build-Ordner (nur .js wird benötigt)
+/
+
+# IDE-spezifische Dateien (VS Code, WebStorm, etc.)
+.vscode/
+.idea/
+
+# Log- und Cache-Dateien
+*.log
+*.cache
+.DS_Store
+
+# Obsidian-spezifische Dateien (falls du in deinem Vault arbeitest)
+.obsidian/
