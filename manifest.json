@@ -1,11 +1,10 @@
 {
   "id": "story-questions",
   "name": "Story Questions",
-  "version": "1.0.0",
-  "minAppVersion": "0.15.0",
-  "description": "Ein Plugin für Charaktergenerierung.",
-  "author": "Dein Name",
-  "authorUrl": "https://deine-website.de",  
+  "version": "0.1.0",
+  "minAppVersion": "0.1.0",
+  "description": "StoryQuestions is an Obsidian plugin helping writers develop their ideas.",
+  "author": "Yvette mit KI",
   "isDesktopOnly": false
 
 }
