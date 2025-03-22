@@ -8,6 +8,7 @@ const DEFAULT_SETTINGS = {
     googleApiKey: "", // Google API Key
     aiModel: "mixtral", // Standard-Modell auf Mixtral geändert
     language: "de",
+    showSidebarIcon: true,
 };
 const VIEW_TYPE_STORY_QUESTIONS = "story-questions-view";
 const EDIT_QUESTIONS_VIEW_TYPE = "edit-questions-view";
@@ -579,6 +580,9 @@ class StoryQuestionsView extends obsidian_1.ItemView {
     getDisplayText() {
         return t(this.plugin, "storyQuestions");
     }
+    getIcon() {
+        return "dices";
+    }
     async onOpen() {
         console.log("DEBUG: onOpen called - Version 17 Stable");
         const container = this.containerEl;
@@ -1065,7 +1069,7 @@ class StoryQuestionsPlugin extends obsidian_1.Plugin {
     }
     async onload() {
         await this.loadSettings();
-        this.addRibbonIcon("dice", "Story Questions", () => {
+        this.addRibbonIcon("dices", "Story Questions", () => {
             this.activateView(VIEW_TYPE_STORY_QUESTIONS);
         });
         this.registerView(VIEW_TYPE_STORY_QUESTIONS, (leaf) => new StoryQuestionsView(leaf, this));
@@ -1075,14 +1079,9 @@ class StoryQuestionsPlugin extends obsidian_1.Plugin {
             callback: () => this.activateView(VIEW_TYPE_STORY_QUESTIONS),
         });
         this.addSettingTab(new StoryQuestionsSettingTab(this.app, this));
-        // CSS direkt einfügen
-        this.app.workspace.onLayoutReady(() => {
-            const style = document.createElement("style");
-            style.textContent = `
-        /* CSS hier */
-      `;
-            document.head.appendChild(style);
-        });
+    }
+    onunload() {
+        this.app.workspace.detachLeavesOfType("StoryQuestionsView");
     }
     async activateView(viewType) {
         const leaves = this.app.workspace.getLeavesOfType(viewType);
