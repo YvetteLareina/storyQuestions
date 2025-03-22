@@ -7,6 +7,7 @@ interface StoryQuestionsSettings {
   googleApiKey: string;  // Neu für Google API
   aiModel: string;
   language: "de" | "en";
+  showSidebarIcon: boolean;
 }
 
 const DEFAULT_SETTINGS: StoryQuestionsSettings = {
@@ -16,6 +17,7 @@ const DEFAULT_SETTINGS: StoryQuestionsSettings = {
   googleApiKey: "",     // Google API Key
   aiModel: "mixtral",   // Standard-Modell auf Mixtral geändert
   language: "de",
+  showSidebarIcon: true,
 };
 
 const VIEW_TYPE_STORY_QUESTIONS = "story-questions-view";
@@ -639,7 +641,9 @@ class StoryQuestionsView extends ItemView {
   getDisplayText() {
     return t(this.plugin, "storyQuestions");
   }
-
+  getIcon() {
+    return "dices"; 
+  }
   async onOpen() {
     console.log("DEBUG: onOpen called - Version 17 Stable");
     const container = this.containerEl;
@@ -1208,33 +1212,27 @@ class StoryQuestionsSettingTab extends PluginSettingTab {
 
 export default class StoryQuestionsPlugin extends Plugin {
   settings: StoryQuestionsSettings = DEFAULT_SETTINGS;
-  
 
   async onload() {
     await this.loadSettings();
-  
-    this.addRibbonIcon("dice", "Story Questions", () => {
+
+    this.addRibbonIcon("dices", "Story Questions", () => {
       this.activateView(VIEW_TYPE_STORY_QUESTIONS);
     });
-  
+
     this.registerView(VIEW_TYPE_STORY_QUESTIONS, (leaf) => new StoryQuestionsView(leaf, this));
-  
+
     this.addCommand({
       id: "open-story-questions",
       name: "Open Story Questions",
       callback: () => this.activateView(VIEW_TYPE_STORY_QUESTIONS),
     });
-  
+
     this.addSettingTab(new StoryQuestionsSettingTab(this.app, this));
-  
-    // CSS direkt einfügen
-    this.app.workspace.onLayoutReady(() => {
-      const style = document.createElement("style");
-      style.textContent = `
-        /* CSS hier */
-      `;
-      document.head.appendChild(style);
-    });
+  }
+
+  onunload() {
+    this.app.workspace.detachLeavesOfType("StoryQuestionsView");
   }
 
   async activateView(viewType: string) {
